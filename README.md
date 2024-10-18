@@ -12,7 +12,7 @@ The  Media Search and Indexing uses a number of cloud resources and open source 
 
 The diagram below presents the architecture of the Media Search and Indexing and illustrates the different AWS resources used.
 
-![Architecture](./public/images/Architecture.drawio.png)
+![Architecture](./public/images/Architecture.png)
 
 ## Workflow
 
