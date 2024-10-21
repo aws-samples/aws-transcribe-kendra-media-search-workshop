@@ -93,7 +93,7 @@ Make sure that you have deployed the CDK. Follow these steps for implementing th
         - Ensure the "Enable trigger" checkbox is selected
         - Review the configuration and click "Add" to create the trigger
       
-    ![Architecture](./public/images/architecture.png)
+    ![Architecture](./public/images/trigger.png)
 
     Now when you upload a file to the "media" folder in your S3 bucket, it will automatically invoke your Lambda function. The function will receive an event containing details about the            uploaded object, including the bucket name and object key
     
@@ -110,7 +110,7 @@ Make sure that you have deployed the CDK. Follow these steps for implementing th
         - Ensure the destination is set to the "media" folder
         - Complete the upload process
           
-    ![Architecture](./public/images/architecture.png)
+    ![Architecture](./public/images/s3.png)
    
     Once the file is uploaded, the transcription job will automatically begin. The AWS Transcribe service will process the media file and generate the transcription output. This output will be      placed in the job output folder within your S3 bucket. You can monitor the progress of the transcription job in the AWS Transcribe console and retrieve the results from the specified output     location in your S3 bucket once the job is complete.
 
