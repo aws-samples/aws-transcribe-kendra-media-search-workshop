@@ -1,12 +1,19 @@
 # Media Search and Indexing using Amazon Transcribe and Amazon Kendra
 
+(Disclaimer 1 about PLOP, Disclaimer 2 about non-prod code)
+
 In today’s digital age, video and audio content is abundant, but finding specific information within videos can be challenging. By leveraging Amazon Kendra, this workshop aims to transform video and audio content into a searchable format, enabling users to quickly locate and access specific segments or topics within the media files.
 
-# Tech
+# AWS Services
 
-The  Media Search and Indexing uses a number of cloud resources and open source projects to work properly:
+The  Media Search and Indexing uses a number of AWS services to work properly:
 
-- [AWS Services](https://aws.amazon.com/)
+- [Amazon S3](https://aws.amazon.com/s3/)
+- [Amazon Transcribe](https://aws.amazon.com/transcribe/)
+- [Amazon Lambda](https://aws.amazon.com/lambda/)
+- [Amazon EventBridge](https://aws.amazon.com/eventbridge/)
+- [Amazon Kendra](https://aws.amazon.com/kendra/)
+
 
 # Architecture Overview
 
@@ -32,17 +39,12 @@ The diagram below presents the architecture of the Media Search and Indexing and
 
 ## Prerequisites
 
-1. Go to AWS Console and open AWS Cloud9.
-2. Click on **Create environment**.
-3. On the Create environment page, fill name as **media-search-yourname**, for instance type select **Large General Purpose instance** and leave all the other options as default.
-4. Click on **Create**.
-5. Once the creation of environment is done, **open** Cloud9 IDE.
-6. Clone this GitHub Repo in the IDE by replacing the value of URL with **Clone URL* and running the below command in terminal,
+1. Clone this GitHub Repo in your local IDE by running the below command in terminal:
 
     ```
-    $ git clone URL
+    $ git clone https://github.com/aws-samples/aws-transcribe-kendra-media-search-workshop.git
     ```
-7. Change Directory,
+2. Change Directory,
 
     ```
     $ cd media_indexing/
@@ -73,3 +75,48 @@ You should explore the contents of this project. It demonstrates a CDK app with 
     ```
     $ cdk deploy
     ```
+## Implementation
+
+Make sure that you have deployed the CDK. Follow these steps for implementing the solution:
+
+1. To create a trigger from S3 (media indexing bucket) to Lambda (S3 crawl function) with the S3 prefix set to "media", follow these steps:
+
+    1. Open the AWS Lambda console and navigate to your S3 crawl function.
+    2. In the "Function overview" section, click on "Add trigger"
+    3. In the "Trigger configuration" dialog:
+   
+        - Select "S3" as the trigger type
+        - Choose your media indexing bucket from the "Bucket" dropdown menu
+        - For "Event type", select "All object create events" (or a specific create event type if preferred)
+        - In the "Prefix" field, enter "media"
+        - Leave the "Suffix" field blank unless you want to filter by file type
+        - Ensure the "Enable trigger" checkbox is selected
+        - Review the configuration and click "Add" to create the trigger
+      
+    ![Architecture](./public/images/architecture.png)
+
+    Now when you upload a file to the "media" folder in your S3 bucket, it will automatically invoke your Lambda function. The function will receive an event containing details about the            uploaded object, including the bucket name and object key
+    
+2. To test the solution, follow these steps to upload a file from the media data folder to your S3 bucket:
+  
+   1. Navigate to the GitHub repository containing the media data folder.
+   2. Download the media file from the media folder in the repository to your local machine.
+   3. Open the AWS Management Console and go to the S3 service.
+   4. Locate and select the media indexing bucket you created earlier.
+   5. Inside the bucket, upload the downloaded media file to the "media" folder in your S3 bucket:
+
+        - Click the "Upload" button
+        - Select the file from your local machine
+        - Ensure the destination is set to the "media" folder
+        - Complete the upload process
+          
+    ![Architecture](./public/images/architecture.png)
+   
+    Once the file is uploaded, the transcription job will automatically begin. The AWS Transcribe service will process the media file and generate the transcription output. This output will be      placed in the job output folder within your S3 bucket. You can monitor the progress of the transcription job in the AWS Transcribe console and retrieve the results from the specified output     location in your S3 bucket once the job is complete.
+
+4. (Optional) Creating a Kendra Index 
+
+    To make the media files searchable, you can create a Kendra index (https://docs.aws.amazon.com/kendra/latest/dg/create-index.html). This will take the transcription, that we saved in the         previous step as an input.
+
+## License
+This library is licensed under the MIT-0 License. See the LICENSE file.
