@@ -2,7 +2,7 @@
 
 In today’s digital age, video and audio content is abundant, but finding specific information within videos can be challenging. By leveraging Amazon Kendra, this sample code aims to transform video and audio content into a searchable format, enabling users to quickly locate and access specific segments or topics within the media files.
 
-(Disclaimer :- This code is intended solely to demonstrate the capabilities of AI/ML services and is not meant for production use. The IAM roles and permissions used in this sample code follow the principle of least privilege. If you wish to implement similar code in a production environment, please configure roles and permissions according to your specific requirements.)
+(Disclaimer :- This code is intended solely to demonstrate the capabilities of AI/ML services and is not meant for production use. The IAM roles and permissions used in this sample code follow the principle of least privilege. If you wish to implement similar code in a production environment, please configure roles and permissions according to your specific requirements!)
 
 
 # AWS Services
